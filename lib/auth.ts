@@ -133,6 +133,18 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      // If url is a relative path, resolve it with baseUrl
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      // If url is same origin, allow it
+      try {
+        if (new URL(url).origin === baseUrl) return url;
+      } catch {
+        // Invalid URL, return dashboard
+      }
+      // Otherwise redirect to dashboard
+      return `${baseUrl}/dashboard`;
+    },
   },
   pages: {
     signIn: '/login',

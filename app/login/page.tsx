@@ -38,8 +38,8 @@ export default function LoginPage() {
           setError(`Authentication failed: ${result.error}`);
         }
       } else if (result?.ok) {
-        router.push('/dashboard');
-        router.refresh();
+        // Force a page reload to ensure session is refreshed
+        window.location.href = '/dashboard';
       } else {
         setError('Login failed. Please try again.');
       }
